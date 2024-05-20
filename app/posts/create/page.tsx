@@ -1,8 +1,11 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/navigation';
-import PostForm from '@/app/components/postform';
 import useSWR from 'swr';
+import { useEffect } from 'react';
+
+const PostForm = dynamic(() => import('@/app/components/postform'), { ssr: false });
 
 export default function CreatePostPage() {
   const router = useRouter();
@@ -16,10 +19,17 @@ export default function CreatePostPage() {
     });
 
     if (res.ok) {
-      mutate();  // Revalidar los datos
+      mutate();  // Revalidate the data
       router.push('/');
     }
   };
+
+  useEffect(() => {
+    // Ensure this code runs only on the client side
+    if (typeof window !== 'undefined') {
+      // Client-side specific code
+    }
+  }, []);
 
   return (
     <div className="max-w-4xl mx-auto p-4">
