@@ -1,0 +1,4 @@
+.env
+.next/
+/next.config.js
+node_modules/
